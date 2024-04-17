@@ -1,36 +1,53 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { appInitState } from './constants';
-import { addContact, deleteContact, fetchContacts } from './contactsOps';
+import { appInitState } from '../constants';
+import {
+  addContact,
+  deleteContact,
+  fetchContacts,
+  updateContact,
+} from '../contacts/operations';
 
 const handlePending = (state) => {
   state.error = null;
-  state.loading = true;
+  state.isLoading = true;
 };
 
 const handleRejected = (state, action) => {
-  state.loading = false;
+  state.isLoading = false;
   state.error = action.payload;
 };
 
 const handleFulfilled = (state, action) => {
   switch (action.type) {
     case 'contacts/fetchAll/fulfilled':
-      state.loading = false;
+      state.isLoading = false;
       state.items = action.payload;
-      break;
+      return;
     case 'contacts/addContact/fulfilled':
-      state.loading = false;
+      state.isLoading = false;
       state.items.push(action.payload);
-      break;
+      return;
     case 'contacts/deleteContact/fulfilled':
-      state.loading = false;
+      state.isLoading = false;
       state.items = state.items.reduce((acc, contact) => {
         contact.id !== action.payload.id && acc.push(contact);
         return acc;
       }, []);
-      break;
+      return;
+    case 'contacts/updateContact/fulfilled':
+      state.isLoading = false;
+      state.items = state.items.map((contact) =>
+        contact.id === action.payload.id
+          ? {
+              ...contact,
+              name: action.payload.name,
+              number: action.payload.number,
+            }
+          : contact
+      );
+      return;
     default:
-      state;
+      return state;
   }
 };
 
@@ -47,7 +64,10 @@ const contactsSlice = createSlice({
       .addCase(addContact.rejected, handleRejected)
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, handleFulfilled)
-      .addCase(deleteContact.rejected, handleRejected);
+      .addCase(deleteContact.rejected, handleRejected)
+      .addCase(updateContact.pending, handlePending)
+      .addCase(updateContact.fulfilled, handleFulfilled)
+      .addCase(updateContact.rejected, handleRejected);
   },
 });
 

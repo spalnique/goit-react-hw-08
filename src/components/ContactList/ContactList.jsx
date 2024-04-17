@@ -3,29 +3,29 @@ import Contact from '../Contact/Contact';
 import {
   selectContacts,
   selectError,
+  selectIsLoading,
   selectFilteredContacts,
-  selectLoading,
-} from '../../redux/selectors';
+} from '../../redux/contacts/selectors';
 
 import css from '../ContactList/ContactList.module.css';
 
 const ContactList = () => {
   const error = useSelector(selectError);
-  const loading = useSelector(selectLoading);
+  const isLoading = useSelector(selectIsLoading);
   const visibleContacts = useSelector(selectFilteredContacts);
   const allContacts = useSelector(selectContacts);
   return (
     <>
       <ul className={css.contactList}>
-        {loading && <p>Contacts are being loaded...</p>}
+        {isLoading && <p>Contacts are being loaded...</p>}
         {error && <p>Something went wrong. Please, try again later</p>}
-        {!loading && !error && allContacts.length === 0 && (
+        {!isLoading && !error && allContacts.length === 0 && (
           <p>Your contact list is empty</p>
         )}
         {allContacts.length > 0 && visibleContacts.length === 0 && (
           <p>Nothing found</p>
         )}
-        {!loading &&
+        {!isLoading &&
           allContacts.length > 0 &&
           visibleContacts.length > 0 &&
           visibleContacts.map((contact) => {

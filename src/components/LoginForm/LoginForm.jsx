@@ -3,77 +3,74 @@ import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import clsx from 'clsx';
 import {
-  contactValidationSchema,
-  contactsFormInitValues,
+  signInFormInitValues,
+  signinValidationSchema,
 } from '../../redux/constants';
-import { addContact } from '../../redux/contacts/operations';
-
+import { signin } from '../../redux/auth/operations';
 import css from '../ContactForm/ContactForm.module.css';
 
-const ContactForm = () => {
-  const nameFieldId = useId();
-  const numberFieldId = useId();
+const LoginForm = () => {
+  const emailFieldId = useId();
+  const passwordFieldId = useId();
 
   const dispatch = useDispatch();
 
   const handleSubmit = (values, form) => {
-    dispatch(addContact(values));
+    dispatch(signin(values));
     form.resetForm();
-    // я не придумав, як у компонент Field форміка на дом-елемент інпута повісити ref
-    document.querySelector('input[name="name"]').focus();
   };
 
   return (
     <Formik
-      initialValues={contactsFormInitValues}
-      validationSchema={contactValidationSchema}
+      initialValues={signInFormInitValues}
+      validationSchema={signinValidationSchema}
       onSubmit={handleSubmit}>
       {(formikData) => {
         return (
           <Form className={css.formContainer}>
             <div className={css.fieldContainer}>
-              <label className={css.labelText} htmlFor={nameFieldId}>
-                Name
+              <label className={css.labelText} htmlFor={emailFieldId}>
+                Email
               </label>
               <Field
-                type="text"
-                name="name"
-                id={nameFieldId}
+                type="email"
+                name="email"
+                id={emailFieldId}
                 className={clsx(
                   css.formInput,
-                  formikData.touched.name &&
-                    formikData.errors.name &&
+                  formikData.touched.email &&
+                    formikData.errors.email &&
                     css.formInputError
                 )}
               />
               <ErrorMessage
-                name="name"
+                name="email"
                 component="p"
                 className={css.errorMessage}
               />
             </div>
             <div className={css.fieldContainer}>
-              <label className={css.labelText} htmlFor={numberFieldId}>
-                Phone
+              <label className={css.labelText} htmlFor={passwordFieldId}>
+                Password
               </label>
               <Field
-                type="tel"
-                name="number"
-                id={numberFieldId}
+                type="password"
+                name="password"
+                id={passwordFieldId}
                 className={clsx(
                   css.formInput,
-                  formikData.touched.number &&
-                    formikData.errors.number &&
+                  formikData.touched.password &&
+                    formikData.errors.password &&
                     css.formInputError
                 )}
               />
               <ErrorMessage
-                name="number"
+                name="password"
                 component="p"
                 className={css.errorMessage}
               />
             </div>
-            <button type="submit">Add contact</button>
+            <button type="submit">Log in</button>
           </Form>
         );
       }}
@@ -81,4 +78,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default LoginForm;

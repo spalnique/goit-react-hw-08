@@ -3,30 +3,28 @@ import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import clsx from 'clsx';
 import {
-  contactValidationSchema,
-  contactsFormInitValues,
+  signUpFormInitValues,
+  signupValidationSchema,
 } from '../../redux/constants';
-import { addContact } from '../../redux/contacts/operations';
-
+import { signup } from '../../redux/auth/operations';
 import css from '../ContactForm/ContactForm.module.css';
 
-const ContactForm = () => {
+const RegisterForm = () => {
   const nameFieldId = useId();
-  const numberFieldId = useId();
+  const emailFieldId = useId();
+  const passwordFieldId = useId();
 
   const dispatch = useDispatch();
 
   const handleSubmit = (values, form) => {
-    dispatch(addContact(values));
+    dispatch(signup(values));
     form.resetForm();
-    // я не придумав, як у компонент Field форміка на дом-елемент інпута повісити ref
-    document.querySelector('input[name="name"]').focus();
   };
 
   return (
     <Formik
-      initialValues={contactsFormInitValues}
-      validationSchema={contactValidationSchema}
+      initialValues={signUpFormInitValues}
+      validationSchema={signupValidationSchema}
       onSubmit={handleSubmit}>
       {(formikData) => {
         return (
@@ -53,27 +51,48 @@ const ContactForm = () => {
               />
             </div>
             <div className={css.fieldContainer}>
-              <label className={css.labelText} htmlFor={numberFieldId}>
-                Phone
+              <label className={css.labelText} htmlFor={emailFieldId}>
+                Email
               </label>
               <Field
-                type="tel"
-                name="number"
-                id={numberFieldId}
+                type="email"
+                name="email"
+                id={emailFieldId}
                 className={clsx(
                   css.formInput,
-                  formikData.touched.number &&
-                    formikData.errors.number &&
+                  formikData.touched.email &&
+                    formikData.errors.email &&
                     css.formInputError
                 )}
               />
               <ErrorMessage
-                name="number"
+                name="email"
                 component="p"
                 className={css.errorMessage}
               />
             </div>
-            <button type="submit">Add contact</button>
+            <div className={css.fieldContainer}>
+              <label className={css.labelText} htmlFor={passwordFieldId}>
+                Password
+              </label>
+              <Field
+                type="password"
+                name="password"
+                id={passwordFieldId}
+                className={clsx(
+                  css.formInput,
+                  formikData.touched.password &&
+                    formikData.errors.password &&
+                    css.formInputError
+                )}
+              />
+              <ErrorMessage
+                name="password"
+                component="p"
+                className={css.errorMessage}
+              />
+            </div>
+            <button type="submit">Register</button>
           </Form>
         );
       }}
@@ -81,4 +100,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default RegisterForm;
