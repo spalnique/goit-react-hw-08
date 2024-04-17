@@ -1,0 +1,21 @@
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+}
+
+button {
+  display: block;
+  padding: 8px 16px;
+  background-color: cadetblue;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 4px;
+  border: none;
+}
