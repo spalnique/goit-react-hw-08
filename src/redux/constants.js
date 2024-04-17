@@ -15,7 +15,7 @@ export const appInitState = {
   },
   contacts: {
     items: [],
-    isLoading: true,
+    isLoading: false,
     error: null,
   },
   filters: {
