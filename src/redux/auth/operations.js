@@ -15,6 +15,7 @@ export const signup = createAsyncThunk(
   'auth/signup',
   async (credentials, thunkAPI) => {
     try {
+      console.log('credentials', credentials);
       const response = await axios.post('/users/signup', credentials);
       setAuthorizationToken(response.data.token);
       return response.data;
