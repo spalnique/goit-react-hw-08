@@ -5,13 +5,17 @@ import { signup, signin, signout, refreshUser } from '../auth/operations';
 const handlePending = (state, action) => {
   state.isLoading = true;
   state.error = null;
-  if (action.type === 'auth/refreshUser/pending') state.isRefreshing = true;
+  if (action.type === 'auth/refreshUser/pending') {
+    state.isRefreshing = true;
+  }
 };
 
 const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
-  if (action.type === 'auth/refreshUser/rejected') state.isRefreshing = false;
+  if (action.type === 'auth/refreshUser/rejected') {
+    state.isRefreshing = false;
+  }
 };
 
 const handleFulfilled = (state, action) => {
