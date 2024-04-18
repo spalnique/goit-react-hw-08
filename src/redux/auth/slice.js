@@ -5,7 +5,7 @@ import { signup, signin, signout, refreshUser } from '../auth/operations';
 const handlePending = (state, action) => {
   state.isLoading = true;
   state.error = null;
-  if (action.type === 'auth/refreshUser/pending') {
+  if (action.type === 'auth/refresh/pending') {
     state.isRefreshing = true;
   }
 };
@@ -13,7 +13,7 @@ const handlePending = (state, action) => {
 const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
-  if (action.type === 'auth/refreshUser/rejected') {
+  if (action.type === 'auth/refresh/rejected') {
     state.isRefreshing = false;
   }
 };
@@ -37,7 +37,7 @@ const handleFulfilled = (state, action) => {
       state.token = null;
       state.isLoggedIn = false;
       return state;
-    case 'auth/refreshUser/fulfilled':
+    case 'auth/refresh/fulfilled':
       state.user = action.payload;
       state.isLoggedIn = true;
       state.isRefreshing = false;
