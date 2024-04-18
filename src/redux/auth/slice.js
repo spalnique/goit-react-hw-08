@@ -22,7 +22,12 @@ const handleFulfilled = (state, action) => {
   state.isLoading = false;
 
   switch (action.type) {
-    case 'auth/signup/fulfilled' || 'auth/signin/fulfilled':
+    case 'auth/signup/fulfilled':
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+      return;
+    case 'auth/signin/fulfilled':
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
