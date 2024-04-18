@@ -26,22 +26,22 @@ const handleFulfilled = (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
-      return state;
+      return;
     case 'auth/signin/fulfilled':
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
-      return state;
+      return;
     case 'auth/signout/fulfilled':
       state.user = { name: null, email: null };
       state.token = null;
       state.isLoggedIn = false;
-      return state;
+      return;
     case 'auth/refresh/fulfilled':
       state.user = action.payload;
       state.isLoggedIn = true;
       state.isRefreshing = false;
-      return state;
+      return;
     default:
       return state;
   }
