@@ -1,10 +1,10 @@
 import LoginForm from '../components/LoginForm/LoginForm';
-
+import Layout from '../components/Layout/Layout';
 const LoginPage = () => {
   return (
-    <div>
+    <Layout>
       <LoginForm />
-    </div>
+    </Layout>
   );
 };
 
