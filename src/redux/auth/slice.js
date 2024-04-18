@@ -26,22 +26,22 @@ const handleFulfilled = (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
-      return;
+      return state;
     case 'auth/signin/fulfilled':
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
-      return;
+      return state;
     case 'auth/signout/fulfilled':
       state.user = { name: null, email: null };
       state.token = null;
       state.isLoggedIn = false;
-      return;
+      return state;
     case 'auth/refreshUser/fulfilled':
-      state.user = action.payload.user;
+      state.user = action.payload;
       state.isLoggedIn = true;
       state.isRefreshing = false;
-      return;
+      return state;
     default:
       return state;
   }
@@ -65,4 +65,5 @@ const auth = createSlice({
     builder.addCase(refreshUser.rejected, handleRejected);
   },
 });
+
 export const authReducer = auth.reducer;
