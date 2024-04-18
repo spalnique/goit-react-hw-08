@@ -38,7 +38,7 @@ const handleFulfilled = (state, action) => {
       state.isLoggedIn = false;
       return;
     case 'auth/refreshUser/fulfilled':
-      state.user = action.payload;
+      state.user = action.payload.user;
       state.isLoggedIn = true;
       state.isRefreshing = false;
       return;
