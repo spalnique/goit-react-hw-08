@@ -11,7 +11,7 @@ import css from './EditForm.module.css';
 
 const EditForm = () => {
   const dispatch = useDispatch();
-  
+
   const { id, name, number } = useSelector(selectModalData);
   const nameFieldId = useId();
   const numberFieldId = useId();
@@ -19,6 +19,7 @@ const EditForm = () => {
   const handleSubmit = (values) => {
     dispatch(updateContact({ id, ...values }));
     dispatch(closeModal());
+    dispatch(toggleIsEditing());
   };
   const handleCancel = () => {
     dispatch(closeModal());

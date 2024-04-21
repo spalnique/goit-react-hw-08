@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { appInitState } from '../constants';
 import { register, login, logout, refreshUser } from '../auth/operations';
+import { resetItems } from '../contacts/slice';
 
 const handlePending = (state, action) => {
   state.isLoading = true;
@@ -18,35 +19,6 @@ const handleRejected = (state, action) => {
   }
 };
 
-const handleFulfilled = (state, action) => {
-  state.isLoading = false;
-
-  switch (action.type) {
-    case 'auth/register/fulfilled':
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-      return;
-    case 'auth/login/fulfilled':
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-      return;
-    case 'auth/logout/fulfilled':
-      state.user = { name: null, email: null };
-      state.token = null;
-      state.isLoggedIn = false;
-      return;
-    case 'auth/refresh/fulfilled':
-      state.user = action.payload;
-      state.isLoggedIn = true;
-      state.isRefreshing = false;
-      return;
-    default:
-      return state;
-  }
-};
-
 const auth = createSlice({
   name: 'auth',
   initialState: appInitState.auth,
@@ -57,16 +29,37 @@ const auth = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(register.pending, handlePending);
-    builder.addCase(register.fulfilled, handleFulfilled);
+    builder.addCase(register.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+    });
     builder.addCase(register.rejected, handleRejected);
     builder.addCase(login.pending, handlePending);
-    builder.addCase(login.fulfilled, handleFulfilled);
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isLoggedIn = true;
+    });
     builder.addCase(login.rejected, handleRejected);
     builder.addCase(logout.pending, handlePending);
-    builder.addCase(logout.fulfilled, handleFulfilled);
+    builder.addCase(logout.fulfilled, (state) => {
+      state.isLoading = false;
+      state.user = { name: null, email: null };
+      state.token = null;
+      state.isLoggedIn = false;
+      resetItems();
+    });
     builder.addCase(logout.rejected, handleRejected);
     builder.addCase(refreshUser.pending, handlePending);
-    builder.addCase(refreshUser.fulfilled, handleFulfilled);
+    builder.addCase(refreshUser.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload;
+      state.isLoggedIn = true;
+      state.isRefreshing = false;
+    });
     builder.addCase(refreshUser.rejected, handleRejected);
   },
   selectors: {

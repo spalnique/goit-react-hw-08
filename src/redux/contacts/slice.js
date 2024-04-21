@@ -1,5 +1,4 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { appInitState } from '../constants';
 import {
   addContact,
   deleteContact,
@@ -7,6 +6,7 @@ import {
   updateContact,
 } from '../contacts/operations';
 import { selectFiltersName } from '../filter/slice';
+import { appInitState } from '../constants';
 
 const handlePending = (state) => {
   state.error = null;
@@ -18,67 +18,58 @@ const handleRejected = (state, action) => {
   state.error = action.payload;
 };
 
-const handleFulfilled = (state, action) => {
-  switch (action.type) {
-    case 'contacts/fetchAll/fulfilled':
-      state.isLoading = false;
-      state.items = action.payload;
-      return;
-    case 'contacts/addContact/fulfilled':
-      state.isLoading = false;
-      state.items.push(action.payload);
-      return;
-    case 'contacts/deleteContact/fulfilled':
-      state.isLoading = false;
-      state.items = state.items.reduce((acc, contact) => {
-        contact.id !== action.payload.id && acc.push(contact);
-        return acc;
-      }, []);
-      return;
-    case 'contacts/updateContact/fulfilled':
-      state.isLoading = false;
-      console.log('action.payload:', action.payload);
-      state.items = state.items.map((contact) =>
-        contact.id === action.payload.id
-          ? {
-              ...contact,
-              name: action.payload.name,
-              number: action.payload.number,
-            }
-          : contact
-      );
-      return;
-    default:
-      return state;
-  }
-};
-
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: appInitState.contacts,
 
   reducers: {
-    toggleIsEditing(state) {
+    toggleIsEditing: (state) => {
       state.isEditing = !state.isEditing;
     },
-    toggleIsDeleting(state) {
+    toggleIsDeleting: (state) => {
       state.isDeleting = !state.isDeleting;
+    },
+    resetItems: (state) => {
+      state.items = [];
     },
   },
 
   extraReducers: (builder) => {
     builder
       .addCase(fetchContacts.pending, handlePending)
-      .addCase(fetchContacts.fulfilled, handleFulfilled)
+      .addCase(fetchContacts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.items = action.payload;
+      })
       .addCase(fetchContacts.rejected, handleRejected)
       .addCase(addContact.pending, handlePending)
-      .addCase(addContact.fulfilled, handleFulfilled)
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.items.push(action.payload);
+      })
       .addCase(addContact.rejected, handleRejected)
       .addCase(deleteContact.pending, handlePending)
-      .addCase(deleteContact.fulfilled, handleFulfilled)
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.items = state.items.reduce((acc, contact) => {
+          contact.id !== action.payload.id && acc.push(contact);
+          return acc;
+        }, []);
+      })
       .addCase(deleteContact.rejected, handleRejected)
       .addCase(updateContact.pending, handlePending)
-      .addCase(updateContact.fulfilled, handleFulfilled)
+      .addCase(updateContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.items = state.items.map((contact) =>
+          contact.id === action.payload.id
+            ? {
+                ...contact,
+                name: action.payload.name,
+                number: action.payload.number,
+              }
+            : contact
+        );
+      })
       .addCase(updateContact.rejected, handleRejected);
   },
 
@@ -109,7 +100,7 @@ export const selectFilteredContacts = createSelector(
     )
 );
 
-export const { editContact, toggleIsEditing, toggleIsDeleting } =
+export const { resetItems, toggleIsEditing, toggleIsDeleting } =
   contactsSlice.actions;
 
 export const contactsReducer = contactsSlice.reducer;
