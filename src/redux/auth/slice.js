@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { appInitState } from '../constants';
 import { register, login, logout, refreshUser } from '../auth/operations';
-import { onLogoutOpen, onLogoutClose, onClose } from '../modal/slice';
+import { onLogoutOpen, onClose } from '../modal/slice';
 
 const handlePending = (state, action) => {
   state.isLoading = true;

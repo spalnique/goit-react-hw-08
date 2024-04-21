@@ -33,6 +33,10 @@ const modalSlice = createSlice({
       state.isOpen = false;
       state.data = {};
     },
+    onOpen: (state, action) => {
+      state.isOpen = true;
+      state.data = action.payload;
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -57,6 +61,7 @@ const modalSlice = createSlice({
 
 export const { selectIsOpen, selectModalData } = modalSlice.selectors;
 export const {
+  onOpen,
   onClose,
   onEditOpen,
   onEditClose,

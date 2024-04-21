@@ -8,13 +8,7 @@ import {
 import { logout } from '../auth/operations';
 import { selectFiltersName } from '../filter/slice';
 import { appInitState } from '../constants';
-import {
-  onClose,
-  onDeleteClose,
-  onDeleteOpen,
-  onEditClose,
-  onEditOpen,
-} from '../modal/slice';
+import { onClose, onDeleteOpen, onEditOpen } from '../modal/slice';
 
 const handlePending = (state) => {
   state.error = null;
@@ -80,8 +74,7 @@ const contactsSlice = createSlice({
       state.items = [];
     });
 
-    builder.addCase(onEditOpen, (state, action) => {
-      console.log('action.type:', action.type);
+    builder.addCase(onEditOpen, (state) => {
       state.isEditing = true;
     });
     // .addCase(onEditClose, (state) => {
