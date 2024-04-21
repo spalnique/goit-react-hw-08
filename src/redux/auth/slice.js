@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { appInitState } from '../constants';
 import { register, login, logout, refreshUser } from '../auth/operations';
-import { resetItems } from '../contacts/slice';
+import { onLogoutOpen, onLogoutClose, onClose } from '../modal/slice';
 
 const handlePending = (state, action) => {
   state.isLoading = true;
@@ -22,51 +22,65 @@ const handleRejected = (state, action) => {
 const auth = createSlice({
   name: 'auth',
   initialState: appInitState.auth,
-  reducers: {
-    toggleIsLoggingOut: (state) => {
-      state.isLoggingOut = !state.isLoggingOut;
-    },
-  },
+
   extraReducers: (builder) => {
-    builder.addCase(register.pending, handlePending);
-    builder.addCase(register.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-    });
-    builder.addCase(register.rejected, handleRejected);
-    builder.addCase(login.pending, handlePending);
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-    });
-    builder.addCase(login.rejected, handleRejected);
-    builder.addCase(logout.pending, handlePending);
-    builder.addCase(logout.fulfilled, (state) => {
-      state.isLoading = false;
-      state.user = { name: null, email: null };
-      state.token = null;
-      state.isLoggedIn = false;
-      resetItems();
-    });
-    builder.addCase(logout.rejected, handleRejected);
-    builder.addCase(refreshUser.pending, handlePending);
-    builder.addCase(refreshUser.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.user = action.payload;
-      state.isLoggedIn = true;
-      state.isRefreshing = false;
-    });
-    builder.addCase(refreshUser.rejected, handleRejected);
+    builder
+      .addCase(register.pending, handlePending)
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(register.rejected, handleRejected);
+
+    builder
+      .addCase(login.pending, handlePending)
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(login.rejected, handleRejected);
+
+    builder
+      .addCase(logout.pending, handlePending)
+      .addCase(logout.fulfilled, (state) => {
+        state.isLoading = false;
+        state.user = { name: null, email: null };
+        state.token = null;
+        state.isLoggedIn = false;
+        state.isLoggingOut = false;
+      })
+      .addCase(logout.rejected, handleRejected);
+
+    builder
+      .addCase(refreshUser.pending, handlePending)
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, handleRejected);
+
+    builder
+      .addCase(onLogoutOpen, (state) => {
+        state.isLoggingOut = true;
+      })
+      // .addCase(onLogoutClose, (state) => {
+      //   state.isLoggingOut = false;
+      // })
+      .addCase(onClose, (state) => {
+        state.isLoggingOut = false;
+      });
   },
   selectors: {
+    selectUser: (state) => state.user,
     selectAuthIsLoading: (state) => state.isLoading,
     selectAuthError: (state) => state.error,
     selectIsLoggedIn: (state) => state.isLoggedIn,
-    selectUser: (state) => state.user,
     selectIsRefreshing: (state) => state.isRefreshing,
     selectIsLoggingOut: (state) => state.isLoggingOut,
   },

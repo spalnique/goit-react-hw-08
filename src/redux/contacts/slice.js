@@ -5,8 +5,16 @@ import {
   fetchContacts,
   updateContact,
 } from '../contacts/operations';
+import { logout } from '../auth/operations';
 import { selectFiltersName } from '../filter/slice';
 import { appInitState } from '../constants';
+import {
+  onClose,
+  onDeleteClose,
+  onDeleteOpen,
+  onEditClose,
+  onEditOpen,
+} from '../modal/slice';
 
 const handlePending = (state) => {
   state.error = null;
@@ -22,18 +30,6 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState: appInitState.contacts,
 
-  reducers: {
-    toggleIsEditing: (state) => {
-      state.isEditing = !state.isEditing;
-    },
-    toggleIsDeleting: (state) => {
-      state.isDeleting = !state.isDeleting;
-    },
-    resetItems: (state) => {
-      state.items = [];
-    },
-  },
-
   extraReducers: (builder) => {
     builder
       .addCase(fetchContacts.pending, handlePending)
@@ -41,13 +37,17 @@ const contactsSlice = createSlice({
         state.isLoading = false;
         state.items = action.payload;
       })
-      .addCase(fetchContacts.rejected, handleRejected)
+      .addCase(fetchContacts.rejected, handleRejected);
+
+    builder
       .addCase(addContact.pending, handlePending)
       .addCase(addContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items.push(action.payload);
       })
-      .addCase(addContact.rejected, handleRejected)
+      .addCase(addContact.rejected, handleRejected);
+
+    builder
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -55,8 +55,11 @@ const contactsSlice = createSlice({
           contact.id !== action.payload.id && acc.push(contact);
           return acc;
         }, []);
+        state.isDeleting = false;
       })
-      .addCase(deleteContact.rejected, handleRejected)
+      .addCase(deleteContact.rejected, handleRejected);
+
+    builder
       .addCase(updateContact.pending, handlePending)
       .addCase(updateContact.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -69,8 +72,33 @@ const contactsSlice = createSlice({
               }
             : contact
         );
+        state.isEditing = false;
       })
       .addCase(updateContact.rejected, handleRejected);
+
+    builder.addCase(logout.fulfilled, (state) => {
+      state.items = [];
+    });
+
+    builder.addCase(onEditOpen, (state, action) => {
+      console.log('action.type:', action.type);
+      state.isEditing = true;
+    });
+    // .addCase(onEditClose, (state) => {
+    //   state.isEditing = !state.isEditing;
+    // });
+
+    builder.addCase(onDeleteOpen, (state) => {
+      state.isDeleting = true;
+    });
+    // .addCase(onDeleteClose, (state) => {
+    //   state.isDeleting = !state.isDeleting;
+    // });
+
+    builder.addCase(onClose, (state) => {
+      state.isDeleting = false;
+      state.isEditing = false;
+    });
   },
 
   selectors: {

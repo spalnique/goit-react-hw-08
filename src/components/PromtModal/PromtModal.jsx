@@ -1,13 +1,23 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from '../../redux/contacts/operations';
-import { toggleIsDeleting } from '../../redux/contacts/slice';
-import { closeModal, selectModalData } from '../../redux/modal/slice';
-import { toggleIsLoggingOut } from '../../redux/auth/slice';
+import { onClose, selectModalData } from '../../redux/modal/slice';
 import { logout } from '../../redux/auth/operations';
 
 const PromtModal = ({ actionType }) => {
   const dispatch = useDispatch();
-  const modalData = useSelector(selectModalData);
+  const contact = useSelector(selectModalData);
+
+  const handleDelete = () => {
+    dispatch(deleteContact(contact.id));
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  const handleCancel = () => {
+    dispatch(onClose());
+  };
 
   switch (actionType) {
     case 'delete': {
@@ -15,25 +25,11 @@ const PromtModal = ({ actionType }) => {
         <div>
           <div>
             <span>Are you sure to delete this contact?</span>
-            <span>{modalData.name}</span>
+            <span>{contact.name}</span>
           </div>
           <div>
-            <button
-              onClick={() => {
-                dispatch(deleteContact(modalData.id));
-                dispatch(toggleIsDeleting());
-                dispatch(closeModal());
-                // dispatch(onDeleteClose());
-              }}>
-              Yes
-            </button>
-            <button
-              onClick={() => {
-                dispatch(toggleIsDeleting());
-                dispatch(closeModal());
-              }}>
-              No
-            </button>
+            <button onClick={handleDelete}>Yes</button>
+            <button onClick={handleCancel}>No</button>
           </div>
         </div>
       );
@@ -43,22 +39,8 @@ const PromtModal = ({ actionType }) => {
         <div>
           <span>Are you sure to logout?</span>
           <div>
-            <button
-              onClick={() => {
-                dispatch(toggleIsLoggingOut());
-                dispatch(logout());
-                dispatch(closeModal());
-                // dispatch(onLogoutClose());
-              }}>
-              Yes
-            </button>
-            <button
-              onClick={() => {
-                dispatch(toggleIsLoggingOut());
-                dispatch(closeModal());
-              }}>
-              No
-            </button>
+            <button onClick={handleLogout}>Yes</button>
+            <button onClick={handleCancel}>No</button>
           </div>
         </div>
       );

@@ -2,8 +2,13 @@ import { useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import clsx from 'clsx';
-import { closeModal, selectModalData } from '../../redux/modal/slice';
-import { toggleIsEditing } from '../../redux/contacts/slice';
+import {
+  onClose,
+  closeModal,
+  onEditClose,
+  selectModalData,
+} from '../../redux/modal/slice';
+// import { toggleIsEditing } from '../../redux/contacts/slice';
 import { updateContact } from '../../redux/contacts/operations';
 import { contactValidationSchema } from '../../redux/constants';
 
@@ -17,13 +22,14 @@ const EditForm = () => {
   const numberFieldId = useId();
 
   const handleSubmit = (values) => {
+    // dispatch(closeModal());
+    // dispatch(toggleIsEditing());
     dispatch(updateContact({ id, ...values }));
-    dispatch(closeModal());
-    dispatch(toggleIsEditing());
   };
-  const handleCancel = () => {
-    dispatch(closeModal());
-    dispatch(toggleIsEditing());
+  const handleSubmitCancel = () => {
+    dispatch(onClose());
+    // dispatch(closeModal());
+    // dispatch(toggleIsEditing());
   };
 
   return (
@@ -78,7 +84,7 @@ const EditForm = () => {
                 />
               </div>
               <button type="submit">Save changes</button>
-              <button type="button" onClick={handleCancel}>
+              <button type="button" onClick={handleSubmitCancel}>
                 Cancel
               </button>
             </Form>
