@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from '../../redux/auth/operations';
 import Layout from '../Layout/Layout';
 import { Route, Routes } from 'react-router-dom';
-import { selectIsRefreshing } from '../../redux/auth/selectors';
+import { selectIsRefreshing } from '../../redux/auth/slice';
 import RestrictedRoute from '../RestrictedRoute/RestrictedRoute';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import Modal from '../Modal/Modal';
 
 const HomePage = lazy(() => import('../../pages/HomePage'));
 const RegisterPage = lazy(() => import('../../pages/RegisterPage'));
@@ -25,7 +26,7 @@ const App = () => {
     <p>Refreshing user...</p>
   ) : (
     <Layout>
-      <Suspense fallback={() => <p>Loading...</p>}>
+      <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
@@ -54,6 +55,7 @@ const App = () => {
           />
         </Routes>
       </Suspense>
+      <Modal />
     </Layout>
   );
 };

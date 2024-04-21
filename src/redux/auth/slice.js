@@ -50,6 +50,11 @@ const handleFulfilled = (state, action) => {
 const auth = createSlice({
   name: 'auth',
   initialState: appInitState.auth,
+  reducers: {
+    toggleIsLoggingOut: (state) => {
+      state.isLoggingOut = !state.isLoggingOut;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(signup.pending, handlePending);
     builder.addCase(signup.fulfilled, handleFulfilled);
@@ -64,6 +69,23 @@ const auth = createSlice({
     builder.addCase(refreshUser.fulfilled, handleFulfilled);
     builder.addCase(refreshUser.rejected, handleRejected);
   },
+  selectors: {
+    selectAuthIsLoading: (state) => state.isLoading,
+    selectAuthError: (state) => state.error,
+    selectIsLoggedIn: (state) => state.isLoggedIn,
+    selectUser: (state) => state.user,
+    selectIsRefreshing: (state) => state.isRefreshing,
+    selectIsLoggingOut: (state) => state.isLoggingOut,
+  },
 });
 
+export const {
+  selectAuthError,
+  selectAuthIsLoading,
+  selectIsLoggedIn,
+  selectIsLoggingOut,
+  selectIsRefreshing,
+  selectUser,
+} = auth.selectors;
+export const { toggleIsLoggingOut } = auth.actions;
 export const authReducer = auth.reducer;

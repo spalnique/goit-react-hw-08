@@ -4,7 +4,7 @@ import UserMenu from '../UserMenu/UserMenu';
 import AuthNav from '../AuthNav/AuthNav';
 import css from './AppBar.module.css';
 
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { selectIsLoggedIn } from '../../redux/auth/slice';
 
 const AppBar = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);

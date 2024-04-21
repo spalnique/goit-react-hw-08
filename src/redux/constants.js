@@ -10,17 +10,21 @@ export const appInitState = {
     token: null,
     isLoading: false,
     isLoggedIn: false,
+    isLoggingOut: false,
     isRefreshing: false,
     error: null,
   },
   contacts: {
     items: [],
     isLoading: false,
+    isEditing: false,
+    isDeleting: false,
     error: null,
   },
   filters: {
     name: '',
   },
+  modal: { isOpen: false, data: {} },
 };
 
 export const authPersistConfig = {
