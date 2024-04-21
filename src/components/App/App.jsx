@@ -1,10 +1,10 @@
 // import css from '../App/App.module.css';
 import { Suspense, lazy, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { refreshUser } from '../../redux/auth/operations';
-import Layout from '../Layout/Layout';
-import { Route, Routes } from 'react-router-dom';
 import { selectIsRefreshing } from '../../redux/auth/slice';
+import Layout from '../Layout/Layout';
 import RestrictedRoute from '../RestrictedRoute/RestrictedRoute';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 import Modal from '../Modal/Modal';

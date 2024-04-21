@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 
 import css from '../Contact/Contact.module.css';
-import { onDeleteOpen, onEditOpen, openModal } from '../../redux/modal/slice';
+import { openModal } from '../../redux/modal/slice';
 import { toggleIsDeleting, toggleIsEditing } from '../../redux/contacts/slice';
 
 const Contact = ({ contact: { id, name, number } }) => {

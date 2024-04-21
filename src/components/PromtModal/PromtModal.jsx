@@ -1,12 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from '../../redux/contacts/operations';
 import { toggleIsDeleting } from '../../redux/contacts/slice';
-import {
-  closeModal,
-  onDeleteClose,
-  onLogoutClose,
-  selectModalData,
-} from '../../redux/modal/slice';
+import { closeModal, selectModalData } from '../../redux/modal/slice';
 import { toggleIsLoggingOut } from '../../redux/auth/slice';
 import { logout } from '../../redux/auth/operations';
 

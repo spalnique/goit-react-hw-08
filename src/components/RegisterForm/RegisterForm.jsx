@@ -2,11 +2,12 @@ import { useId } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import clsx from 'clsx';
+import { register } from '../../redux/auth/operations';
 import {
-  signUpFormInitValues,
-  signupValidationSchema,
+  registerFormInitValues,
+  registerValidationSchema,
 } from '../../redux/constants';
-import { signup } from '../../redux/auth/operations';
+
 import css from '../ContactForm/ContactForm.module.css';
 
 const RegisterForm = () => {
@@ -17,14 +18,14 @@ const RegisterForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, form) => {
-    dispatch(signup(values));
+    dispatch(register(values));
     form.resetForm();
   };
 
   return (
     <Formik
-      initialValues={signUpFormInitValues}
-      validationSchema={signupValidationSchema}
+      initialValues={registerFormInitValues}
+      validationSchema={registerValidationSchema}
       onSubmit={handleSubmit}>
       {(formikData) => {
         return (

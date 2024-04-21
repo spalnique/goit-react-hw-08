@@ -2,11 +2,12 @@ import { useId } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import clsx from 'clsx';
+import { login } from '../../redux/auth/operations';
 import {
   loginFormInitValues,
   loginValidationSchema,
 } from '../../redux/constants';
-import { login } from '../../redux/auth/operations';
+
 import css from '../ContactForm/ContactForm.module.css';
 
 const LoginForm = () => {

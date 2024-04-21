@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, toggleIsLoggingOut } from '../../redux/auth/slice';
-import { openModal, onLogoutOpen } from '../../redux/modal/slice';
+import { openModal } from '../../redux/modal/slice';
+
 import css from './UserMenu.module.css';
 
 const UserMenu = () => {
