@@ -26,7 +26,7 @@ const Modal = () => {
       <div>
         {isEditing && <EditForm />}
         {isDeleting && <PromtModal actionType={'delete'} />}
-        {isLoggingOut && <PromtModal actionType={'signout'} />}
+        {isLoggingOut && <PromtModal actionType={'logout'} />}
       </div>
     </ReactModal>
   );

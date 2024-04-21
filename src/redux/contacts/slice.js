@@ -64,13 +64,6 @@ const contactsSlice = createSlice({
     toggleIsDeleting(state) {
       state.isDeleting = !state.isDeleting;
     },
-    // editContact(state, action) {
-    //   console.log('action.payload', action.payload);
-    //   console.log(
-    //     'target:',
-    //     state.items.find((contact) => contact.id === action.payload)
-    //   );
-    // },
   },
 
   extraReducers: (builder) => {

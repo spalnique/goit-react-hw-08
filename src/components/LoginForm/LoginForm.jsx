@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import clsx from 'clsx';
 import {
-  signInFormInitValues,
-  signinValidationSchema,
+  loginFormInitValues,
+  loginValidationSchema,
 } from '../../redux/constants';
-import { signin } from '../../redux/auth/operations';
+import { login } from '../../redux/auth/operations';
 import css from '../ContactForm/ContactForm.module.css';
 
 const LoginForm = () => {
@@ -16,14 +16,14 @@ const LoginForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, form) => {
-    dispatch(signin(values));
+    dispatch(login(values));
     form.resetForm();
   };
 
   return (
     <Formik
-      initialValues={signInFormInitValues}
-      validationSchema={signinValidationSchema}
+      initialValues={loginFormInitValues}
+      validationSchema={loginValidationSchema}
       onSubmit={handleSubmit}>
       {(formikData) => {
         return (

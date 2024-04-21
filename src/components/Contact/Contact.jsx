@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 
 import css from '../Contact/Contact.module.css';
-import { openModal } from '../../redux/modal/slice';
+import { onDeleteOpen, onEditOpen, openModal } from '../../redux/modal/slice';
 import { toggleIsDeleting, toggleIsEditing } from '../../redux/contacts/slice';
 
 const Contact = ({ contact: { id, name, number } }) => {
@@ -26,13 +26,19 @@ const Contact = ({ contact: { id, name, number } }) => {
       <button
         className={css.contactRemoveButton}
         type="button"
-        onClick={handleEdit}>
+        onClick={() => {
+          handleEdit();
+          // dispatch(onEditOpen({ id, name, number }));
+        }}>
         edit
       </button>
       <button
         className={css.contactRemoveButton}
         type="button"
-        onClick={handleDelete}>
+        onClick={() => {
+          handleDelete();
+          // dispatch(onDeleteOpen({ id, name, number }));
+        }}>
         delete
       </button>
     </div>

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { appInitState } from '../constants';
-import { signup, signin, signout, refreshUser } from '../auth/operations';
+import { register, login, logout, refreshUser } from '../auth/operations';
 
 const handlePending = (state, action) => {
   state.isLoading = true;
@@ -22,17 +22,17 @@ const handleFulfilled = (state, action) => {
   state.isLoading = false;
 
   switch (action.type) {
-    case 'auth/signup/fulfilled':
+    case 'auth/register/fulfilled':
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
       return;
-    case 'auth/signin/fulfilled':
+    case 'auth/login/fulfilled':
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLoggedIn = true;
       return;
-    case 'auth/signout/fulfilled':
+    case 'auth/logout/fulfilled':
       state.user = { name: null, email: null };
       state.token = null;
       state.isLoggedIn = false;
@@ -56,15 +56,15 @@ const auth = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(signup.pending, handlePending);
-    builder.addCase(signup.fulfilled, handleFulfilled);
-    builder.addCase(signup.rejected, handleRejected);
-    builder.addCase(signin.pending, handlePending);
-    builder.addCase(signin.fulfilled, handleFulfilled);
-    builder.addCase(signin.rejected, handleRejected);
-    builder.addCase(signout.pending, handlePending);
-    builder.addCase(signout.fulfilled, handleFulfilled);
-    builder.addCase(signout.rejected, handleRejected);
+    builder.addCase(register.pending, handlePending);
+    builder.addCase(register.fulfilled, handleFulfilled);
+    builder.addCase(register.rejected, handleRejected);
+    builder.addCase(login.pending, handlePending);
+    builder.addCase(login.fulfilled, handleFulfilled);
+    builder.addCase(login.rejected, handleRejected);
+    builder.addCase(logout.pending, handlePending);
+    builder.addCase(logout.fulfilled, handleFulfilled);
+    builder.addCase(logout.rejected, handleRejected);
     builder.addCase(refreshUser.pending, handlePending);
     builder.addCase(refreshUser.fulfilled, handleFulfilled);
     builder.addCase(refreshUser.rejected, handleRejected);

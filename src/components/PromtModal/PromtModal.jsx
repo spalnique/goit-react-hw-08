@@ -1,13 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from '../../redux/contacts/operations';
 import { toggleIsDeleting } from '../../redux/contacts/slice';
-import { closeModal, selectModalData } from '../../redux/modal/slice';
+import {
+  closeModal,
+  onDeleteClose,
+  onLogoutClose,
+  selectModalData,
+} from '../../redux/modal/slice';
 import { toggleIsLoggingOut } from '../../redux/auth/slice';
-import { signout } from '../../redux/auth/operations';
+import { logout } from '../../redux/auth/operations';
 
 const PromtModal = ({ actionType }) => {
   const dispatch = useDispatch();
   const modalData = useSelector(selectModalData);
+
   switch (actionType) {
     case 'delete': {
       return (
@@ -22,6 +28,7 @@ const PromtModal = ({ actionType }) => {
                 dispatch(deleteContact(modalData.id));
                 dispatch(toggleIsDeleting());
                 dispatch(closeModal());
+                // dispatch(onDeleteClose());
               }}>
               Yes
             </button>
@@ -36,7 +43,7 @@ const PromtModal = ({ actionType }) => {
         </div>
       );
     }
-    case 'signout':
+    case 'logout':
       return (
         <div>
           <span>Are you sure to logout?</span>
@@ -44,8 +51,9 @@ const PromtModal = ({ actionType }) => {
             <button
               onClick={() => {
                 dispatch(toggleIsLoggingOut());
-                dispatch(signout());
+                dispatch(logout());
                 dispatch(closeModal());
+                // dispatch(onLogoutClose());
               }}>
               Yes
             </button>

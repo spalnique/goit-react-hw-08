@@ -43,7 +43,7 @@ export const contactValidationSchema = Yup.object().shape({
     .max(50, 'Phone number is too long!')
     .required('Required'),
 });
-export const signupValidationSchema = Yup.object().shape({
+export const registerValidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(4, 'Username is too short!')
     .max(16, 'Username is too long!')
@@ -54,7 +54,7 @@ export const signupValidationSchema = Yup.object().shape({
     .max(64, 'Password is too long!')
     .required('Required'),
 });
-export const signinValidationSchema = Yup.object().shape({
+export const loginValidationSchema = Yup.object().shape({
   email: Yup.string().required('Required'),
   password: Yup.string()
     .min(8, 'Password is too short!')
@@ -66,12 +66,12 @@ export const contactsFormInitValues = {
   name: '',
   number: '',
 };
-export const signUpFormInitValues = {
+export const registerFormInitValues = {
   name: '',
   email: '',
   password: '',
 };
-export const signInFormInitValues = {
+export const loginFormInitValues = {
   email: '',
   password: '',
 };

@@ -11,11 +11,11 @@ const clearAuthorizationToken = () => {
   axios.defaults.headers.common.Authorization = '';
 };
 
-export const signup = createAsyncThunk(
-  'auth/signup',
+export const register = createAsyncThunk(
+  'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post('/users/signup', credentials);
+      const response = await axios.post('/users/register', credentials);
       setAuthorizationToken(response.data.token);
       return response.data;
     } catch (error) {
@@ -24,8 +24,8 @@ export const signup = createAsyncThunk(
   }
 );
 
-export const signin = createAsyncThunk(
-  'auth/signin',
+export const login = createAsyncThunk(
+  'auth/login',
   async (credentials, thunkAPI) => {
     try {
       const response = await axios.post('/users/login', credentials);
@@ -37,7 +37,7 @@ export const signin = createAsyncThunk(
   }
 );
 
-export const signout = createAsyncThunk('auth/signout', async (_, thunkAPI) => {
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     const response = await axios.post(`/users/logout`);
     clearAuthorizationToken();
