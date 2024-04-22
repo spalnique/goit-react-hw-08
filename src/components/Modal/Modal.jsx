@@ -1,5 +1,6 @@
 import ReactModal from 'react-modal';
 import { useSelector, useDispatch } from 'react-redux';
+
 import {
   onClose,
   selectIsOpen,

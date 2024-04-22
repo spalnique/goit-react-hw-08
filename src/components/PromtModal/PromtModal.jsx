@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
+
 import { deleteContact } from '../../redux/contacts/operations';
-import { onClose, selectModalData } from '../../redux/modal/slice';
 import { logout } from '../../redux/auth/operations';
+import { onClose, selectModalData } from '../../redux/modal/slice';
 
 import css from './PromtModal.module.css';
 
@@ -39,7 +40,7 @@ const PromtModal = ({ actionType }) => {
     case 'logout':
       return (
         <>
-          <span className={css.importantText}>Are you sure to logout?</span>
+          <span className={css.importantText}>Are you sure to log out?</span>
           <div className={css.buttonsWrapper}>
             <button onClick={handleLogout}>Yes</button>
             <button onClick={handleCancel}>No</button>

@@ -1,8 +1,11 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Toaster } from 'react-hot-toast';
+
 import { refreshUser } from '../../redux/auth/operations';
 import { selectIsRefreshing } from '../../redux/auth/slice';
+
 import Layout from '../Layout/Layout';
 import RestrictedRoute from '../RestrictedRoute/RestrictedRoute';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
@@ -55,6 +58,13 @@ const App = () => {
         </Routes>
         <Modal />
       </Suspense>
+      <Toaster
+        position="top-right"
+        containerStyle={{
+          top: 80,
+          right: 20,
+        }}
+      />
     </Layout>
   );
 };
