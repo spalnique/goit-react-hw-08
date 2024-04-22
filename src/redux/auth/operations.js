@@ -78,8 +78,6 @@ export const refreshUser = createAsyncThunk(
       const promise = axios.get('/users/current');
       toast.promise(promise, {
         loading: 'Loading...',
-        success: `Done!`,
-        error: 'Something went wrong. Please, try again later.',
       });
       const response = await promise;
       return response.data;
