@@ -13,11 +13,11 @@ const ContactsPage = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <>
       <ContactForm />
       <SearchBox />
       <ContactList />
-    </div>
+    </>
   );
 };
 

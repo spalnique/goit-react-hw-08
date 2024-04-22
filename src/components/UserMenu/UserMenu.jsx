@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser, toggleIsLoggingOut } from '../../redux/auth/slice';
-import { onLogoutOpen, openModal } from '../../redux/modal/slice';
+import { selectUser } from '../../redux/auth/slice';
+import { onOpen } from '../../redux/modal/slice';
 
 import css from './UserMenu.module.css';
 
@@ -9,19 +9,15 @@ const UserMenu = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    // dispatch(toggleIsLoggingOut());
-    // dispatch(openModal());
-    dispatch(onLogoutOpen());
+    dispatch(onOpen({ type: 'logout' }));
   };
   return (
-    <ul className={css.userMenuList}>
-      <li className={css.welcomeUser}>
-        <p>Hello, {name}!</p>
-      </li>
-      <li className={css.logoutUser}>
-        <button onClick={handleClick}>Sign out</button>
-      </li>
-    </ul>
+    <div className={css.userMenuWrapper}>
+      <span className={css.welcomeUser}>Hello, {name}!</span>
+      <button className={css.logoutUser} onClick={handleClick}>
+        Log out
+      </button>
+    </div>
   );
 };
 

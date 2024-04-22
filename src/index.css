@@ -4,18 +4,44 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-size: 14px;
+  color: rgb(49, 60, 97);
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 ul {
   list-style-type: none;
 }
 
+a {
+  text-decoration: none;
+}
+
+p {
+  line-height: 1;
+}
+
 button {
   display: block;
+  min-width: 80px;
   padding: 8px 16px;
-  background-color: cadetblue;
-  color: white;
+  background-color: white;
+  color: rgb(49, 60, 97);
   text-transform: uppercase;
   border-radius: 4px;
-  border: none;
+  border: 0.5px solid;
+  border-color: rgb(49, 60, 97);
+  transition: all 250ms ease-in-out;
+}
+
+button:hover,
+button:focus {
+  background-color: rgb(49, 60, 97);
+  color: white;
+  cursor: pointer;
 }

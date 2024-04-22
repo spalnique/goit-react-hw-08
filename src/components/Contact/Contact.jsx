@@ -1,22 +1,17 @@
 import { useDispatch } from 'react-redux';
-import { openModal, onEditOpen, onDeleteOpen } from '../../redux/modal/slice';
+import { onOpen } from '../../redux/modal/slice';
 
 import css from '../Contact/Contact.module.css';
-// import { toggleIsDeleting, toggleIsEditing } from '../../redux/contacts/slice';
 
 const Contact = ({ contact: { id, name, number } }) => {
   const dispatch = useDispatch();
 
   const handleEdit = () => {
-    // dispatch(openModal({ id, name, number }));
-    // dispatch(toggleIsEditing());
-    dispatch(onEditOpen({ id, name, number }));
+    dispatch(onOpen({ data: { id, name, number }, type: 'edit' }));
   };
 
   const handleDelete = () => {
-    // dispatch(openModal({ id, name, number }));
-    // dispatch(toggleIsDeleting());
-    dispatch(onDeleteOpen({ id, name, number }));
+    dispatch(onOpen({ data: { id, name, number }, type: 'delete' }));
   };
 
   return (

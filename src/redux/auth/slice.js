@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { appInitState } from '../constants';
 import { register, login, logout, refreshUser } from '../auth/operations';
-import { onLogoutOpen, onClose } from '../modal/slice';
+import { appInitState } from '../constants';
 
 const handlePending = (state, action) => {
   state.isLoading = true;
@@ -51,7 +50,6 @@ const auth = createSlice({
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
-        state.isLoggingOut = false;
       })
       .addCase(logout.rejected, handleRejected);
 
@@ -64,17 +62,6 @@ const auth = createSlice({
         state.isRefreshing = false;
       })
       .addCase(refreshUser.rejected, handleRejected);
-
-    builder
-      .addCase(onLogoutOpen, (state) => {
-        state.isLoggingOut = true;
-      })
-      // .addCase(onLogoutClose, (state) => {
-      //   state.isLoggingOut = false;
-      // })
-      .addCase(onClose, (state) => {
-        state.isLoggingOut = false;
-      });
   },
   selectors: {
     selectUser: (state) => state.user,
@@ -82,7 +69,6 @@ const auth = createSlice({
     selectAuthError: (state) => state.error,
     selectIsLoggedIn: (state) => state.isLoggedIn,
     selectIsRefreshing: (state) => state.isRefreshing,
-    selectIsLoggingOut: (state) => state.isLoggingOut,
   },
 });
 
@@ -90,9 +76,8 @@ export const {
   selectAuthError,
   selectAuthIsLoading,
   selectIsLoggedIn,
-  selectIsLoggingOut,
   selectIsRefreshing,
   selectUser,
 } = auth.selectors;
-export const { toggleIsLoggingOut } = auth.actions;
+
 export const authReducer = auth.reducer;

@@ -1,0 +1,17 @@
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.importantText {
+  font-weight: 700;
+  font-size: 16px;
+}

@@ -1,9 +1,9 @@
 .contactContainer {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 10px;
   padding: 10px;
-  border: 1px solid cadetblue;
+  border: 0.5px solid rgb(49, 60, 97);
   border-radius: 4px;
   width: 100%;
 }
@@ -14,4 +14,5 @@
   gap: 10px;
   font-size: 14px;
   text-transform: capitalize;
+  flex-grow: 1;
 }

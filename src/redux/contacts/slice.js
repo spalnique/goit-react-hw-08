@@ -8,7 +8,6 @@ import {
 import { logout } from '../auth/operations';
 import { selectFiltersName } from '../filter/slice';
 import { appInitState } from '../constants';
-import { onClose, onDeleteOpen, onEditOpen } from '../modal/slice';
 
 const handlePending = (state) => {
   state.error = null;
@@ -49,7 +48,6 @@ const contactsSlice = createSlice({
           contact.id !== action.payload.id && acc.push(contact);
           return acc;
         }, []);
-        state.isDeleting = false;
       })
       .addCase(deleteContact.rejected, handleRejected);
 
@@ -66,31 +64,11 @@ const contactsSlice = createSlice({
               }
             : contact
         );
-        state.isEditing = false;
       })
       .addCase(updateContact.rejected, handleRejected);
 
     builder.addCase(logout.fulfilled, (state) => {
       state.items = [];
-    });
-
-    builder.addCase(onEditOpen, (state) => {
-      state.isEditing = true;
-    });
-    // .addCase(onEditClose, (state) => {
-    //   state.isEditing = !state.isEditing;
-    // });
-
-    builder.addCase(onDeleteOpen, (state) => {
-      state.isDeleting = true;
-    });
-    // .addCase(onDeleteClose, (state) => {
-    //   state.isDeleting = !state.isDeleting;
-    // });
-
-    builder.addCase(onClose, (state) => {
-      state.isDeleting = false;
-      state.isEditing = false;
     });
   },
 
@@ -98,18 +76,11 @@ const contactsSlice = createSlice({
     selectContacts: (state) => state.items,
     selectError: (state) => state.error,
     selectIsLoading: (state) => state.isLoading,
-    selectIsEditing: (state) => state.isEditing,
-    selectIsDeleting: (state) => state.isDeleting,
   },
 });
 
-export const {
-  selectContacts,
-  selectError,
-  selectIsDeleting,
-  selectIsEditing,
-  selectIsLoading,
-} = contactsSlice.selectors;
+export const { selectContacts, selectError, selectIsLoading } =
+  contactsSlice.selectors;
 
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectFiltersName],
@@ -120,8 +91,5 @@ export const selectFilteredContacts = createSelector(
         number.includes(filterValue)
     )
 );
-
-export const { resetItems, toggleIsEditing, toggleIsDeleting } =
-  contactsSlice.actions;
 
 export const contactsReducer = contactsSlice.reducer;

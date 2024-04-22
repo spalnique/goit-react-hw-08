@@ -6,6 +6,6 @@
   height: 300px;
   overflow-x: hidden;
   padding: 10px;
-  border: 1px solid cadetblue;
+  border: 0.5px solid rgb(49, 60, 97);
   border-radius: 4px;
 }

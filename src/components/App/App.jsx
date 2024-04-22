@@ -6,12 +6,12 @@ import { selectIsRefreshing } from '../../redux/auth/slice';
 import Layout from '../Layout/Layout';
 import RestrictedRoute from '../RestrictedRoute/RestrictedRoute';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
-import Modal from '../Modal/Modal';
 
 const HomePage = lazy(() => import('../../pages/HomePage'));
 const RegisterPage = lazy(() => import('../../pages/RegisterPage'));
 const LoginPage = lazy(() => import('../../pages/LoginPage'));
 const ContactsPage = lazy(() => import('../../pages/ContactsPage'));
+const Modal = lazy(() => import('../Modal/Modal'));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -53,8 +53,8 @@ const App = () => {
             }
           />
         </Routes>
+        <Modal />
       </Suspense>
-      <Modal />
     </Layout>
   );
 };

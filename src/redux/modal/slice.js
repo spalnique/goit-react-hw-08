@@ -7,35 +7,17 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState: appInitState.modal,
   reducers: {
-    onEditOpen: (state, action) => {
+    onOpen: (state, action) => {
+      state.type = action.payload.type;
       state.isOpen = true;
-      state.data = action.payload;
+      if (action.payload.type !== 'logout') {
+        state.data = action.payload.data;
+      }
     },
-    // onEditClose: (state) => {
-    //   state.isOpen = false;
-    //   state.data = {};
-    // },
-    onDeleteOpen: (state, action) => {
-      state.isOpen = true;
-      state.data = action.payload;
-    },
-    // onDeleteClose: (state) => {
-    //   state.isOpen = false;
-    //   state.data = {};
-    // },
-    onLogoutOpen: (state) => {
-      state.isOpen = true;
-    },
-    // onLogoutClose: (state) => {
-    //   state.isOpen = false;
-    // },
     onClose: (state) => {
       state.isOpen = false;
       state.data = {};
-    },
-    onOpen: (state, action) => {
-      state.isOpen = true;
-      state.data = action.payload;
+      state.type = '';
     },
   },
   extraReducers: (builder) =>
@@ -43,33 +25,27 @@ const modalSlice = createSlice({
       .addCase(deleteContact.fulfilled, (state) => {
         state.isOpen = false;
         state.data = {};
+        state.type = '';
       })
       .addCase(logout.fulfilled, (state) => {
         state.isOpen = false;
         state.data = {};
+        state.type = '';
       })
       .addCase(updateContact.fulfilled, (state) => {
         state.isOpen = false;
         state.data = {};
+        state.type = '';
       }),
 
   selectors: {
     selectIsOpen: (state) => state.isOpen,
     selectModalData: (state) => state.data,
+    selectModalType: (state) => state.type,
   },
 });
 
-export const { selectIsOpen, selectModalData } = modalSlice.selectors;
-export const {
-  onOpen,
-  onClose,
-  onEditOpen,
-  onEditClose,
-  onDeleteOpen,
-  onDeleteClose,
-  onLogoutOpen,
-  onLogoutClose,
-  openModal,
-  closeModal,
-} = modalSlice.actions;
+export const { selectIsOpen, selectModalData, selectModalType } =
+  modalSlice.selectors;
+export const { onOpen, onClose } = modalSlice.actions;
 export const modalReducer = modalSlice.reducer;

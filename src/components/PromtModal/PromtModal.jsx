@@ -3,6 +3,8 @@ import { deleteContact } from '../../redux/contacts/operations';
 import { onClose, selectModalData } from '../../redux/modal/slice';
 import { logout } from '../../redux/auth/operations';
 
+import css from './PromtModal.module.css';
+
 const PromtModal = ({ actionType }) => {
   const dispatch = useDispatch();
   const contact = useSelector(selectModalData);
@@ -22,30 +24,30 @@ const PromtModal = ({ actionType }) => {
   switch (actionType) {
     case 'delete': {
       return (
-        <div>
-          <div>
+        <>
+          <div className={css.textWrapper}>
             <span>Are you sure to delete this contact?</span>
-            <span>{contact.name}</span>
+            <span className={css.importantText}>{contact.name}</span>
           </div>
-          <div>
+          <div className={css.buttonsWrapper}>
             <button onClick={handleDelete}>Yes</button>
             <button onClick={handleCancel}>No</button>
           </div>
-        </div>
+        </>
       );
     }
     case 'logout':
       return (
-        <div>
-          <span>Are you sure to logout?</span>
-          <div>
+        <>
+          <span className={css.importantText}>Are you sure to logout?</span>
+          <div className={css.buttonsWrapper}>
             <button onClick={handleLogout}>Yes</button>
             <button onClick={handleCancel}>No</button>
           </div>
-        </div>
+        </>
       );
     default:
-      return;
+      return null;
   }
 };
 

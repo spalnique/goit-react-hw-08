@@ -1,8 +1,26 @@
 .modalOverlay {
+  background-color: rgba(0, 0, 0, 0.134);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modalContainer {
+  background-color: white;
+  border: 0.5px solid rgb(49, 60, 97);
+  border-radius: 4px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .noScroll {
+  overflow: hidden;
 }

@@ -1,5 +1,5 @@
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return <p>Yet another Contacts App</p>;
 };
 
 export default HomePage;
