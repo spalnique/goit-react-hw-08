@@ -27,7 +27,8 @@ const auth = createSlice({
       .addCase(register.pending, handlePending)
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.user;
+        state.user.name = action.payload.user.name;
+        state.user.email = action.payload.user.email;
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })
