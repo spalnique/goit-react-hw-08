@@ -17,7 +17,11 @@ export const register = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const promise = axios.post('/users/register', credentials);
-      
+      toast.promise(promise, {
+        loading: 'Registering...',
+        success: `Welcome, ${credentials.name}`,
+        error: 'Something went wrong. Please, try again later.',
+      });
       const response = await promise;
       setAuthorizationToken(response.data.token);
       return response.data;
