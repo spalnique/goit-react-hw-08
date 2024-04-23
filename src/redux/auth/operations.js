@@ -16,7 +16,7 @@ export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      const promise = axios.post('/users/register', credentials);
+      const promise = axios.post('/users/signup', credentials);
       toast.promise(promise, {
         loading: 'Registering...',
         success: `Welcome, ${credentials.name}`,
