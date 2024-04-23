@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectUser } from '../../redux/auth/slice';
 import { onOpen } from '../../redux/modal/slice';
+import { selectUser } from '../../redux/auth/selectors';
+import { actionType } from '../../redux/constants';
 
 import css from './UserMenu.module.css';
-import { actionType } from '../../redux/constants';
 
 const { actionLogout } = actionType;
 

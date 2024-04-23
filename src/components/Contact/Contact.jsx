@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
 
 import { onOpen } from '../../redux/modal/slice';
+import { actionType } from '../../redux/constants';
 
 import css from '../Contact/Contact.module.css';
-import { actionType } from '../../redux/constants';
 
 const { actionEdit, actionDelete } = actionType;
 

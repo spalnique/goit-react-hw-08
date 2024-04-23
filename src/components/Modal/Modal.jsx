@@ -1,11 +1,8 @@
 import ReactModal from 'react-modal';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  onClose,
-  selectIsOpen,
-  selectModalAction,
-} from '../../redux/modal/slice';
+import { onClose } from '../../redux/modal/slice';
+import { selectIsOpen, selectModalAction } from '../../redux/modal/selectors';
 import { actionType } from '../../redux/constants';
 
 import EditForm from '../EditForm/EditForm';

@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import clsx from 'clsx';
 
+import { addContact } from '../../redux/contacts/operations';
 import {
   contactValidationSchema,
   contactsFormInitValues,
 } from '../../redux/constants';
-import { addContact } from '../../redux/contacts/operations';
 
 import css from '../ContactForm/ContactForm.module.css';
 
@@ -18,9 +18,7 @@ const ContactForm = () => {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, form, touched, errors) => {
-    console.log('handleSubmit touched:', touched);
-    console.log('handleSubmit errors:', errors);
+  const handleSubmit = (values, form) => {
     dispatch(addContact(values));
     form.resetForm();
     nameFieldRef.current.focus();

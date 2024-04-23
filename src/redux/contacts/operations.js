@@ -1,14 +1,15 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
+import { baseURL } from '../constants';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
+const axiosContacts = axios.create({ baseURL });
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get('/contacts');
+      const response = await axiosContacts.get('/contacts');
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -20,7 +21,7 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (contact, thunkAPI) => {
     try {
-      const promise = axios.post('/contacts', { ...contact });
+      const promise = axiosContacts.post('/contacts', { ...contact });
       toast.promise(promise, {
         loading: 'Creating new contact...',
         success: 'New contact has been added.',
@@ -38,7 +39,7 @@ export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async (id, thunkAPI) => {
     try {
-      const promise = axios.delete(`/contacts/${id}`);
+      const promise = axiosContacts.delete(`/contacts/${id}`);
       toast.promise(promise, {
         loading: 'Deleting contact...',
         success: 'Contact has been deleted.',
@@ -56,7 +57,9 @@ export const updateContact = createAsyncThunk(
   'contacts/updateContact',
   async ({ id, ...rest }, thunkAPI) => {
     try {
-      const response = await axios.patch(`/contacts/${id}`, { ...rest });
+      const response = await axiosContacts.patch(`/contacts/${id}`, {
+        ...rest,
+      });
       return response.data;
     } catch (error) {
       thunkAPI.rejectWithValue(error.message);

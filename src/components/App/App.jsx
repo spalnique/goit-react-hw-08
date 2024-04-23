@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 
 import { refreshUser } from '../../redux/auth/operations';
-import { selectIsRefreshing } from '../../redux/auth/slice';
+import { selectIsRefreshing } from '../../redux/auth/selectors';
 
 import Layout from '../Layout/Layout';
 import RestrictedRoute from '../RestrictedRoute/RestrictedRoute';
 import PrivateRoute from '../PrivateRoute/PrivateRoute';
 
 const HomePage = lazy(() => import('../../pages/HomePage'));
-const RegisterPage = lazy(() => import('../../pages/RegisterPage'));
+const RegistrationPage = lazy(() => import('../../pages/RegistrationPage'));
 const LoginPage = lazy(() => import('../../pages/LoginPage'));
 const ContactsPage = lazy(() => import('../../pages/ContactsPage'));
 const Modal = lazy(() => import('../Modal/Modal'));
@@ -36,7 +36,7 @@ const App = () => {
             element={
               <RestrictedRoute
                 redirectTo="/contacts"
-                component={<RegisterPage />}
+                component={<RegistrationPage />}
               />
             }
           />

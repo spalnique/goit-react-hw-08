@@ -40,14 +40,14 @@ const modalSlice = createSlice({
         state.actionType = null;
       }),
 
-  selectors: {
-    selectIsOpen: (state) => state.isOpen,
-    selectModalData: (state) => state.data,
-    selectModalAction: (state) => state.actionType,
-  },
+  // selectors: {
+  //   selectIsOpen: (state) => state.isOpen,
+  //   selectModalData: (state) => state.data,
+  //   selectModalAction: (state) => state.actionType,
+  // },
 });
 
-export const { selectIsOpen, selectModalData, selectModalAction } =
-  modalSlice.selectors;
+// export const { selectIsOpen, selectModalData, selectModalAction } =
+//   modalSlice.selectors;
 export const { onOpen, onClose } = modalSlice.actions;
 export const modalReducer = modalSlice.reducer;

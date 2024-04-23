@@ -9,11 +9,11 @@ const filtersSlice = createSlice({
       state.name = action.payload;
     },
   },
-  selectors: {
-    selectFiltersName: (state) => state.name,
-  },
+  // selectors: {
+  //   selectFiltersName: (state) => state.name,
+  // },
 });
 
-export const { selectFiltersName } = filtersSlice.selectors;
+// export const { selectFiltersName } = filtersSlice.selectors;
 export const { changeFilter } = filtersSlice.actions;
 export const filterReducer = filtersSlice.reducer;

@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { logout } from '../../redux/auth/operations';
 import { deleteContact } from '../../redux/contacts/operations.js';
-import { onClose, selectModalData } from '../../redux/modal/slice';
+import { onClose } from '../../redux/modal/slice';
+import { selectModalData } from '../../redux/modal/selectors.js';
 import { actionType } from '../../redux/constants';
 
 import css from './PromtModal.module.css';

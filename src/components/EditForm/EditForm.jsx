@@ -4,7 +4,8 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import clsx from 'clsx';
 
 import { updateContact } from '../../redux/contacts/operations';
-import { onClose, selectModalData } from '../../redux/modal/slice';
+import { onClose } from '../../redux/modal/slice';
+import { selectModalData } from '../../redux/modal/selectors';
 import { contactValidationSchema } from '../../redux/constants';
 
 import css from './EditForm.module.css';

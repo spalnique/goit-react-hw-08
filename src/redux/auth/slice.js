@@ -63,21 +63,21 @@ const auth = createSlice({
       })
       .addCase(refreshUser.rejected, handleRejected);
   },
-  selectors: {
-    selectUser: (state) => state.user,
-    selectAuthIsLoading: (state) => state.isLoading,
-    selectAuthError: (state) => state.error,
-    selectIsLoggedIn: (state) => state.isLoggedIn,
-    selectIsRefreshing: (state) => state.isRefreshing,
-  },
+  // selectors: {
+  //   selectUser: (state) => state.user,
+  //   selectAuthIsLoading: (state) => state.isLoading,
+  //   selectAuthError: (state) => state.error,
+  //   selectIsLoggedIn: (state) => state.isLoggedIn,
+  //   selectIsRefreshing: (state) => state.isRefreshing,
+  // },
 });
 
-export const {
-  selectAuthError,
-  selectAuthIsLoading,
-  selectIsLoggedIn,
-  selectIsRefreshing,
-  selectUser,
-} = auth.selectors;
+// export const {
+//   selectAuthError,
+//   selectAuthIsLoading,
+//   selectIsLoggedIn,
+//   selectIsRefreshing,
+//   selectUser,
+// } = auth.selectors;
 
 export const authReducer = auth.reducer;
