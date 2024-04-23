@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useId, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import clsx from 'clsx';
@@ -14,14 +14,16 @@ import css from '../ContactForm/ContactForm.module.css';
 const ContactForm = () => {
   const nameFieldId = useId();
   const numberFieldId = useId();
+  const nameFieldRef = useRef(null);
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (values, form) => {
+  const handleSubmit = (values, form, touched, errors) => {
+    console.log('handleSubmit touched:', touched);
+    console.log('handleSubmit errors:', errors);
     dispatch(addContact(values));
     form.resetForm();
-    // я не придумав, як у компонент Field форміка на дом-елемент інпута повісити ref
-    document.querySelector('input[name="name"]').focus();
+    nameFieldRef.current.focus();
   };
 
   return (
@@ -30,6 +32,7 @@ const ContactForm = () => {
       validationSchema={contactValidationSchema}
       onSubmit={handleSubmit}>
       {(formikData) => {
+        console.log('formikData.touched:', formikData.touched);
         return (
           <Form className={css.formContainer}>
             <div className={css.fieldContainer}>
@@ -37,6 +40,7 @@ const ContactForm = () => {
                 Name
               </label>
               <Field
+                innerRef={nameFieldRef}
                 type="text"
                 name="name"
                 id={nameFieldId}
