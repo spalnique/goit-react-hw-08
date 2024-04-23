@@ -75,11 +75,7 @@ export const refreshUser = createAsyncThunk(
 
     try {
       setAuthorizationToken(persistedToken);
-      const promise = axios.get('/users/current');
-      toast.promise(promise, {
-        loading: 'Loading...',
-      });
-      const response = await promise;
+      const response = await axios.get('/users/current');
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
