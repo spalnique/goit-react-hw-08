@@ -3,16 +3,19 @@ import { useDispatch } from 'react-redux';
 import { onOpen } from '../../redux/modal/slice';
 
 import css from '../Contact/Contact.module.css';
+import { actionType } from '../../redux/constants';
+
+const { actionEdit, actionDelete } = actionType;
 
 const Contact = ({ contact: { id, name, number } }) => {
   const dispatch = useDispatch();
 
   const handleEdit = () => {
-    dispatch(onOpen({ data: { id, name, number }, type: 'edit' }));
+    dispatch(onOpen({ data: { id, name, number }, actionType: actionEdit }));
   };
 
   const handleDelete = () => {
-    dispatch(onOpen({ data: { id, name, number }, type: 'delete' }));
+    dispatch(onOpen({ data: { id, name, number }, actionType: actionDelete }));
   };
 
   return (
@@ -21,16 +24,10 @@ const Contact = ({ contact: { id, name, number } }) => {
         <li>{name}</li>
         <li>{number}</li>
       </ul>
-      <button
-        className={css.contactRemoveButton}
-        type="button"
-        onClick={handleEdit}>
+      <button type="button" onClick={handleEdit}>
         edit
       </button>
-      <button
-        className={css.contactRemoveButton}
-        type="button"
-        onClick={handleDelete}>
+      <button type="button" onClick={handleDelete}>
         delete
       </button>
     </div>

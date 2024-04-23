@@ -4,13 +4,16 @@ import { selectUser } from '../../redux/auth/slice';
 import { onOpen } from '../../redux/modal/slice';
 
 import css from './UserMenu.module.css';
+import { actionType } from '../../redux/constants';
+
+const { actionLogout } = actionType;
 
 const UserMenu = () => {
   const { name } = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(onOpen({ type: 'logout' }));
+    dispatch(onOpen({ actionType: actionLogout }));
   };
   return (
     <div className={css.userMenuWrapper}>

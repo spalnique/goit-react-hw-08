@@ -4,12 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   onClose,
   selectIsOpen,
-  selectModalType,
+  selectModalAction,
 } from '../../redux/modal/slice';
+import { actionType } from '../../redux/constants';
+
 import EditForm from '../EditForm/EditForm';
 import PromtModal from '../PromtModal/PromtModal';
 
 import css from './Modal.module.css';
+
+const { actionEdit, actionDelete, actionLogout } = actionType;
 
 const Modal = () => {
   ReactModal.setAppElement('#root');
@@ -17,8 +21,7 @@ const Modal = () => {
   const dispatch = useDispatch();
 
   const modalIsOpen = useSelector(selectIsOpen);
-  const modalType = useSelector(selectModalType);
-
+  const modalAction = useSelector(selectModalAction);
   return (
     <ReactModal
       isOpen={modalIsOpen}
@@ -32,9 +35,9 @@ const Modal = () => {
       shouldCloseOnOverlayClick={true}
       shouldFocusAfterRender={true}
       shouldReturnFocusAfterClose={false}>
-      {modalType === 'edit' && <EditForm />}
-      {modalType === 'delete' && <PromtModal actionType={modalType} />}
-      {modalType === 'logout' && <PromtModal actionType={modalType} />}
+      {modalAction === actionEdit && <EditForm />}
+      {modalAction === actionDelete && <PromtModal action={actionDelete} />}
+      {modalAction === actionLogout && <PromtModal action={actionLogout} />}
     </ReactModal>
   );
 };

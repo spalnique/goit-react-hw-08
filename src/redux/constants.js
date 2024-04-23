@@ -21,7 +21,7 @@ export const appInitState = {
   filters: {
     name: '',
   },
-  modal: { isOpen: false, data: {}, type: '' },
+  modal: { isOpen: false, data: {}, actionType: null },
 };
 
 export const authPersistConfig = {
@@ -40,6 +40,7 @@ export const contactValidationSchema = Yup.object().shape({
     .max(50, 'Phone number is too long!')
     .required('Required'),
 });
+
 export const registerValidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(4, 'Username is too short!')
@@ -51,6 +52,7 @@ export const registerValidationSchema = Yup.object().shape({
     .max(64, 'Password is too long!')
     .required('Required'),
 });
+
 export const loginValidationSchema = Yup.object().shape({
   email: Yup.string().required('Required'),
   password: Yup.string()
@@ -63,12 +65,20 @@ export const contactsFormInitValues = {
   name: '',
   number: '',
 };
+
 export const registerFormInitValues = {
   name: '',
   email: '',
   password: '',
 };
+
 export const loginFormInitValues = {
   email: '',
   password: '',
+};
+
+export const actionType = {
+  actionEdit: 'edit',
+  actionDelete: 'delete',
+  actionLogout: 'logout',
 };

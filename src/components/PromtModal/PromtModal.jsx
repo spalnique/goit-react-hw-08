@@ -1,12 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { deleteContact } from '../../redux/contacts/operations';
 import { logout } from '../../redux/auth/operations';
+import { deleteContact } from '../../redux/contacts/operations.js';
 import { onClose, selectModalData } from '../../redux/modal/slice';
+import { actionType } from '../../redux/constants';
 
 import css from './PromtModal.module.css';
 
-const PromtModal = ({ actionType }) => {
+const { actionDelete, actionLogout } = actionType;
+
+const PromtModal = ({ action }) => {
   const dispatch = useDispatch();
   const contact = useSelector(selectModalData);
 
@@ -22,8 +25,8 @@ const PromtModal = ({ actionType }) => {
     dispatch(onClose());
   };
 
-  switch (actionType) {
-    case 'delete': {
+  switch (action) {
+    case actionDelete: {
       return (
         <>
           <div className={css.textWrapper}>
@@ -37,7 +40,7 @@ const PromtModal = ({ actionType }) => {
         </>
       );
     }
-    case 'logout':
+    case actionLogout:
       return (
         <>
           <span className={css.importantText}>Are you sure to log out?</span>
