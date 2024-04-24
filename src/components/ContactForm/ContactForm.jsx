@@ -30,7 +30,6 @@ const ContactForm = () => {
       validationSchema={contactValidationSchema}
       onSubmit={handleSubmit}>
       {(formikData) => {
-        console.log('formikData.touched:', formikData.touched);
         return (
           <Form className={css.formContainer}>
             <div className={css.fieldContainer}>

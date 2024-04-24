@@ -1,10 +1,9 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 
 import { refreshUser } from '../../redux/auth/operations';
-import { selectIsRefreshing } from '../../redux/auth/selectors';
 
 import Layout from '../Layout/Layout';
 import RestrictedRoute from '../RestrictedRoute/RestrictedRoute';
@@ -18,15 +17,12 @@ const Modal = lazy(() => import('../Modal/Modal'));
 
 const App = () => {
   const dispatch = useDispatch();
-  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
 
-  return isRefreshing ? (
-    <p>Refreshing user...</p>
-  ) : (
+  return (
     <Layout>
       <Suspense fallback={null}>
         <Routes>

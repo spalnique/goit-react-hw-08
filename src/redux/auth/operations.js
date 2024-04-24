@@ -2,28 +2,30 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
 
-import { axiosParams } from '../constants';
+import { axiosConfig as config } from '../constants';
 
 const setAuthorizationToken = (token) => {
-  axiosParams.headers.Authorization = `Bearer ${token}`;
+  config.headers.Authorization = `Bearer ${token}`;
 };
 
 const clearAuthorizationToken = () => {
-  axiosParams.headers.Authorization = '';
+  config.headers.Authorization = null;
 };
-
-const axiosAuth = axios.create(axiosParams);
 
 export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      const promise = axiosAuth.post('/users/signup', credentials);
-      toast.promise(promise, {
-        loading: 'Registering...',
-        success: `Welcome, ${credentials.name}`,
-        error: 'Something went wrong. Please, try again later.',
-      });
+      const promise = axios.post('/users/signup', credentials, config);
+      toast.promise(
+        promise,
+        {
+          loading: 'Registering...',
+          success: `Welcome, ${credentials.name}`,
+          error: 'Something went wrong. Please, try again later.',
+        },
+        { duration: 2500, id: 'register' }
+      );
       const response = await promise;
       setAuthorizationToken(response.data.token);
       return response.data;
@@ -37,13 +39,23 @@ export const login = createAsyncThunk(
   'auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const promise = axiosAuth.post('/users/login', credentials);
-      toast.promise(promise, {
-        loading: 'Logging in...',
-        success: `Welcome back!`,
-        error: 'Something went wrong. Please, try again later.',
-      });
+      const promise = axios.post('/users/login', credentials, config);
+      toast.promise(
+        promise,
+        {
+          loading: 'Logging in...',
+          error: 'Something went wrong. Please, try again later.',
+        },
+        { duration: 2500, id: 'login' }
+      );
       const response = await promise;
+      toast.promise(
+        promise,
+        {
+          success: `Welcome back, ${response.data.user.name}`,
+        },
+        { duration: 2500, id: 'login' }
+      );
       setAuthorizationToken(response.data.token);
       return response.data;
     } catch (error) {
@@ -54,12 +66,17 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
-    const promise = axiosAuth.post(`/users/logout`);
-    toast.promise(promise, {
-      loading: 'Logging out...',
-      success: `See you soon!`,
-      error: 'Something went wrong. Please, try again later.',
-    });
+    const { name } = thunkAPI.getState().auth.user;
+    const promise = axios.post(`/users/logout`, _, config);
+    toast.promise(
+      promise,
+      {
+        loading: 'Logging out...',
+        success: `See you soon, ${name}!`,
+        error: 'Something went wrong. Please, try again later.',
+      },
+      { duration: 2500, id: 'logout' }
+    );
     const response = await promise;
     clearAuthorizationToken();
     return response.data;
@@ -74,10 +91,19 @@ export const refreshUser = createAsyncThunk(
     const persistedToken = thunkAPI.getState().auth.token;
     if (!persistedToken)
       return thunkAPI.rejectWithValue('Unable to fetch user');
-
     try {
       setAuthorizationToken(persistedToken);
-      const response = await axiosAuth.get('/users/current');
+      const promise = axios.get('/users/current', config);
+      toast.promise(
+        promise,
+        {
+          loading: 'Fetching user data...',
+          success: 'Fetching complete!',
+          error: "Couldn't retrieve user data.",
+        },
+        { duration: 2500, id: 'refresh' }
+      );
+      const response = await promise;
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
