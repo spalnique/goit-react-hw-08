@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import storage from 'redux-persist/lib/storage';
 
 export const baseURL = 'https://connections-api.herokuapp.com';
-export const axiosParams = { baseURL, headers:  {'Authorization': ''}}
+export const axiosParams = { baseURL, headers:  {['Authorization']: ''}}
 export const appInitState = {
   auth: {
     user: {
