@@ -2,17 +2,17 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
 
-import { baseURL } from '../constants';
+import { axiosParams } from '../constants';
 
 const setAuthorizationToken = (token) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  axiosParams.headers.common.Authorization = `Bearer ${token}`;
 };
 
 const clearAuthorizationToken = () => {
-  axios.defaults.headers.common.Authorization = '';
+  axiosParams.headers.common.Authorization = '';
 };
 
-const axiosAuth = axios.create({ baseURL });
+const axiosAuth = axios.create(axiosParams);
 
 export const register = createAsyncThunk(
   'auth/register',
