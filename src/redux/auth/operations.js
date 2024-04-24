@@ -5,11 +5,11 @@ import toast from 'react-hot-toast';
 import { axiosParams } from '../constants';
 
 const setAuthorizationToken = (token) => {
-  axiosParams.headers.common.Authorization = `Bearer ${token}`;
+  axiosParams.headers.Authorization = `Bearer ${token}`;
 };
 
 const clearAuthorizationToken = () => {
-  axiosParams.headers.common.Authorization = '';
+  axiosParams.headers.Authorization = '';
 };
 
 const axiosAuth = axios.create(axiosParams);
