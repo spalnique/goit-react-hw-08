@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
-import { baseURL } from '../constants';
+import { axiosParams } from '../constants';
 
-const axiosContacts = axios.create({ baseURL });
+const axiosContacts = axios.create(axiosParams);
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
