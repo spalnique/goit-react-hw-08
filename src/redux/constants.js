@@ -28,6 +28,10 @@ export const axiosConfig = {
   baseURL: 'https://connections-api.herokuapp.com',
   headers: { Authorization: null },
 };
+// export const axiosConfig = {
+//   baseURL: 'https://connections-api.herokuapp.com',
+//   headers: { Authorization: null },
+// };
 
 export const authPersistConfig = {
   key: 'auth',
