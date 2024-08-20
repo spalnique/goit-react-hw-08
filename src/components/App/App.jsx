@@ -1,5 +1,6 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+
 import { useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 
